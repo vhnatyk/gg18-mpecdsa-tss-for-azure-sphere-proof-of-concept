@@ -25,6 +25,7 @@
 #include <applibs/storage.h>
 
 #include "epoll_timerfd_utilities.h"
+#include "rust_hello.h"
 
 static volatile sig_atomic_t terminationRequired = false;
 
@@ -255,6 +256,8 @@ int main(int argc, char *argv[])
 {
     Log_Debug("cURL easy interface based application starting.\n");
     Log_Debug("This sample periodically attempts to download a webpage, using curl's 'easy' API.");
+
+	hello_world();
 
     if (InitHandlers() != 0) {
         terminationRequired = true;
