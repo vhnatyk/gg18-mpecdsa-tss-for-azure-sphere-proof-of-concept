@@ -38,7 +38,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(IncludePath);$(ISenseIncludePath);</IncludePath>
-    <TargetHardwareDirectory>..\..\Hardware\mt3620_rdb</TargetHardwareDirectory>
+    <TargetHardwareDirectory>..\Hardware\mt3620_rdb</TargetHardwareDirectory>
     <TargetHardwareDefinition>sample_hardware.json</TargetHardwareDefinition>
   </PropertyGroup>
   <ItemGroup>
@@ -63,11 +63,11 @@
     <Link>
       <LibraryDependencies>applibs;pthread;gcc_s;c;curl;rust_hello;</LibraryDependencies>
       <AdditionalOptions>-Wl,--no-undefined -nodefaultlibs %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">C:/e-c/rust_dbg_hello_world/target/out/release;C:/e-c/rust_dbg_hello_world/target/out/debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/target/out/$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <VerboseOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</VerboseOutput>
     </Link>
     <PreBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../../rust_dbg_hello_world/sc2</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/sc2</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Build Rust lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
