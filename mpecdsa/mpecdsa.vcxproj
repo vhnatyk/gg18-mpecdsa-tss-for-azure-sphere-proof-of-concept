@@ -59,16 +59,26 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalOptions>-Werror=implicit-function-declaration %(AdditionalOptions)</AdditionalOptions>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Full</Optimization>
+      <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</LinkTimeOptimization>
     </ClCompile>
     <Link>
       <LibraryDependencies>applibs;pthread;gcc_s;c;curl;rust_hello;</LibraryDependencies>
       <AdditionalOptions>-Wl,--no-undefined -nodefaultlibs %(AdditionalOptions)</AdditionalOptions>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/target/out/$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <VerboseOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</VerboseOutput>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">../rust/target/out/$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <OptimizeforMemory Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</OptimizeforMemory>
     </Link>
     <PreBuildEvent>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/sc2</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/sc2 $(ConfigurationName)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Build Rust lib</Message>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">../rust/sc2 $(ConfigurationName)</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Build rust lib</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
 </Project>

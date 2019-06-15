@@ -258,8 +258,9 @@ int main(int argc, char *argv[])
     Log_Debug("This sample periodically attempts to download a webpage, using curl's 'easy' API.");
 
 	//hello_world();
+	run_keygen_test();
 	run_sign_test();
-
+	
     if (InitHandlers() != 0) {
         terminationRequired = true;
     } else {
