@@ -41,6 +41,9 @@
     <TargetHardwareDirectory>..\Hardware\mt3620_rdb</TargetHardwareDirectory>
     <TargetHardwareDefinition>sample_hardware.json</TargetHardwareDefinition>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <LibraryPath>$(ProjectDir)\..\microgmp\bin\ARM\$(ConfiguratioName);$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="epoll_timerfd_utilities.c" />
     <ClCompile Include="main.c" />
@@ -54,6 +57,11 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\microgmp\microgmp.vcxproj">
+      <Project>{8cc1389a-2616-4381-a681-31d102489c4c}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ItemDefinitionGroup>
@@ -61,14 +69,17 @@
       <AdditionalOptions>-Werror=implicit-function-declaration %(AdditionalOptions)</AdditionalOptions>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Full</Optimization>
       <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</LinkTimeOptimization>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">None</DebugInformationFormat>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Disabled</Optimization>
     </ClCompile>
     <Link>
-      <LibraryDependencies>applibs;pthread;gcc_s;c;curl;rust_hello;</LibraryDependencies>
+      <LibraryDependencies>applibs;pthread;gcc_s;c;curl;rust_hello;gmp;</LibraryDependencies>
       <AdditionalOptions>-Wl,--no-undefined -nodefaultlibs %(AdditionalOptions)</AdditionalOptions>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/target/out/$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <VerboseOutput Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</VerboseOutput>
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">../rust/target/out/$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <OptimizeforMemory Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</OptimizeforMemory>
+      <OptimizeforMemory Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</OptimizeforMemory>
+      <DebuggerSymbolInformation Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DebuggerSymbolInformation>
     </Link>
     <PreBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/sc2 $(ConfigurationName)</Command>
