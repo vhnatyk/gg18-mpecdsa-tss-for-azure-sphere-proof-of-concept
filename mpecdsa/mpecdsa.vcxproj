@@ -71,6 +71,7 @@
       <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</LinkTimeOptimization>
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">None</DebugInformationFormat>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Disabled</Optimization>
+      <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</UnrollLoops>
     </ClCompile>
     <Link>
       <LibraryDependencies>applibs;pthread;gcc_s;c;curl;rust_hello;gmp;</LibraryDependencies>

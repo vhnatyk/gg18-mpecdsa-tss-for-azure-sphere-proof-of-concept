@@ -32,7 +32,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <TargetSysroot>2</TargetSysroot>
+    <TargetSysroot>2+Beta1905</TargetSysroot>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -50,6 +50,9 @@
     <ClCompile>
       <AdditionalOptions>-Werror=implicit-function-declaration %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</LinkTimeOptimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Full</Optimization>
+      <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</UnrollLoops>
+      <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</LinkTimeOptimization>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
