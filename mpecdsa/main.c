@@ -254,13 +254,13 @@ static void CloseHandlers(void)
 /// </summary>
 int main(int argc, char *argv[])
 {
-    Log_Debug("cURL easy interface based application starting.\n");
-    Log_Debug("This sample periodically attempts to download a webpage, using curl's 'easy' API.");
+    Log_Debug("Multi party ECDSA embedded proof of concept.\n");
+    Log_Debug("App runs keygen and signing tests to bench RAM consumption and performance.\n");
 
 	//hello_world();
 	run_keygen_test();
 	run_sign_test();
-	
+	/*
     if (InitHandlers() != 0) {
         terminationRequired = true;
     } else {
@@ -275,7 +275,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    CloseHandlers();
+    CloseHandlers();*/
     Log_Debug("Application exiting.\n");
     return 0;
 }
