@@ -27,7 +27,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <TargetSysroot>2</TargetSysroot>
+    <TargetSysroot>2+Beta1905</TargetSysroot>
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
@@ -42,6 +42,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <TargetName>libgmp</TargetName>
+    <ExtensionsToDeleteOnClean>*.*</ExtensionsToDeleteOnClean>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <TargetName>libgmp</TargetName>
@@ -54,6 +55,20 @@
       <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</UnrollLoops>
       <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</LinkTimeOptimization>
     </ClCompile>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">C:\Windows\System32\xcopy /Y "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" "$(SysRootIncludePath)\..\lib"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">C:\Windows\System32\xcopy /Y "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" "$(SysRootIncludePath)\..\lib"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="microgmp.c" />

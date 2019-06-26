@@ -7,7 +7,7 @@
   "Capabilities": {
     "AllowedConnections": [ "example.com" ],
     "MutableStorage": { "SizeKB": 16 },
-    "Gpio": [],
+    "Gpio": [ "$MT3620_RDB_LED1_RED", "$MT3620_RDB_LED1_GREEN" ],
     "Uart": []
   },
   "ApplicationType": "Default"
