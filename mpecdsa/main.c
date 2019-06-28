@@ -175,12 +175,19 @@ int main(int argc, char *argv[])
 
 	//hello_world();
 	blink(red);
-	run_keygen_test();
-	blink(green);
-	run_sign_test();
-	blink(red);
+	float keygen = 0;
+	float sign = 0;
+	int iters = 10;
+	for (size_t i = 0; i < iters; i++)
+	{
+		Log_Debug("i: %d\n", i); 
+		keygen += run_keygen_test();
+		blink(green);
+		sign += run_sign_test();
+		blink(red);
+	}
 	
-	Log_Debug("Application exiting.\n");
+	Log_Debug("Application exiting... keygen: %.4f sign: %.4f \n", keygen/iters, sign/iters);
 	blink(green);
 	blink(green);
 	return 0;
@@ -188,7 +195,7 @@ int main(int argc, char *argv[])
 
 void blink(int fd)
 {
-	const struct timespec sleepTime = { 0, 500 * 1000 * 1000 };
+	const struct timespec sleepTime = { 0, 100 * 1000 * 1000 };
 	GPIO_SetValue(fd, GPIO_Value_High);
 	nanosleep(&sleepTime, NULL);
 	GPIO_SetValue(fd, GPIO_Value_Low);
