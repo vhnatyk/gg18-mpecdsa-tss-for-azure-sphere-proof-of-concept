@@ -75,6 +75,9 @@
     <ClInclude Include="Inc\Public\microgmp.h" />
     <ClInclude Include="Inc\Public\gmp.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Object Include="..\..\work\e-c\ccp\gmp\mpn\copyi.o" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

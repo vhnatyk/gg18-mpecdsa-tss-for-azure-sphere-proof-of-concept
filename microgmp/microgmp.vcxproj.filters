@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{3b4dad88-4c8c-4c6d-833e-d8f13690d75f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Inc\Public\microgmp.h">
@@ -26,5 +29,10 @@
     <ClCompile Include="microgmp.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="..\..\work\e-c\ccp\gmp\mpn\copyi.o">
+      <Filter>Objects</Filter>
+    </Object>
   </ItemGroup>
 </Project>

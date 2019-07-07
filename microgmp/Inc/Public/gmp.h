@@ -77,47 +77,47 @@ typedef const __mpz_struct *mpz_srcptr;
 
 extern const int mp_bits_per_limb;
 
-void mpn_copyi (mp_ptr, mp_srcptr, mp_size_t);
-void mpn_copyd (mp_ptr, mp_srcptr, mp_size_t);
-void mpn_zero (mp_ptr, mp_size_t);
+void __gmpn_copyi (mp_ptr, mp_srcptr, mp_size_t);
+void __gmpn_copyd (mp_ptr, mp_srcptr, mp_size_t);
+void __gmpn_zero (mp_ptr, mp_size_t);
 
-int mpn_cmp (mp_srcptr, mp_srcptr, mp_size_t);
-int mpn_zero_p (mp_srcptr, mp_size_t);
+int __gmpn_cmp (mp_srcptr, mp_srcptr, mp_size_t);
+int __gmpn_zero_p (mp_srcptr, mp_size_t);
 
-mp_limb_t mpn_add_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
-mp_limb_t mpn_add_n (mp_ptr, mp_srcptr, mp_srcptr, mp_size_t);
-mp_limb_t mpn_add (mp_ptr, mp_srcptr, mp_size_t, mp_srcptr, mp_size_t);
+mp_limb_t __gmpn_add_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
+mp_limb_t __gmpn_add_n (mp_ptr, mp_srcptr, mp_srcptr, mp_size_t);
+mp_limb_t __gmpn_add (mp_ptr, mp_srcptr, mp_size_t, mp_srcptr, mp_size_t);
 
-mp_limb_t mpn_sub_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
-mp_limb_t mpn_sub_n (mp_ptr, mp_srcptr, mp_srcptr, mp_size_t);
-mp_limb_t mpn_sub (mp_ptr, mp_srcptr, mp_size_t, mp_srcptr, mp_size_t);
+mp_limb_t __gmpn_sub_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
+mp_limb_t __gmpn_sub_n (mp_ptr, mp_srcptr, mp_srcptr, mp_size_t);
+mp_limb_t __gmpn_sub (mp_ptr, mp_srcptr, mp_size_t, mp_srcptr, mp_size_t);
 
-mp_limb_t mpn_mul_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
-mp_limb_t mpn_addmul_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
-mp_limb_t mpn_submul_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
+mp_limb_t __gmpn_mul_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
+mp_limb_t __gmpn_addmul_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
+mp_limb_t __gmpn_submul_1 (mp_ptr, mp_srcptr, mp_size_t, mp_limb_t);
 
-mp_limb_t mpn_mul (mp_ptr, mp_srcptr, mp_size_t, mp_srcptr, mp_size_t);
-void mpn_mul_n (mp_ptr, mp_srcptr, mp_srcptr, mp_size_t);
-void mpn_sqr (mp_ptr, mp_srcptr, mp_size_t);
-int mpn_perfect_square_p (mp_srcptr, mp_size_t);
-mp_size_t mpn_sqrtrem (mp_ptr, mp_ptr, mp_srcptr, mp_size_t);
+mp_limb_t __gmpn_mul (mp_ptr, mp_srcptr, mp_size_t, mp_srcptr, mp_size_t);
+void __gmpn_mul_n (mp_ptr, mp_srcptr, mp_srcptr, mp_size_t);
+void __gmpn_sqr (mp_ptr, mp_srcptr, mp_size_t);
+int __gmpn_perfect_square_p (mp_srcptr, mp_size_t);
+mp_size_t __gmpn_sqrtrem (mp_ptr, mp_ptr, mp_srcptr, mp_size_t);
 
-mp_limb_t mpn_lshift (mp_ptr, mp_srcptr, mp_size_t, unsigned int);
-mp_limb_t mpn_rshift (mp_ptr, mp_srcptr, mp_size_t, unsigned int);
+mp_limb_t __gmpn_lshift (mp_ptr, mp_srcptr, mp_size_t, unsigned int);
+mp_limb_t __gmpn_rshift (mp_ptr, mp_srcptr, mp_size_t, unsigned int);
 
-mp_bitcnt_t mpn_scan0 (mp_srcptr, mp_bitcnt_t);
-mp_bitcnt_t mpn_scan1 (mp_srcptr, mp_bitcnt_t);
+mp_bitcnt_t __gmpn_scan0 (mp_srcptr, mp_bitcnt_t);
+mp_bitcnt_t __gmpn_scan1 (mp_srcptr, mp_bitcnt_t);
 
-void mpn_com (mp_ptr, mp_srcptr, mp_size_t);
-mp_limb_t mpn_neg (mp_ptr, mp_srcptr, mp_size_t);
+void __gmpn_com (mp_ptr, mp_srcptr, mp_size_t);
+mp_limb_t __gmpn_neg (mp_ptr, mp_srcptr, mp_size_t);
 
-mp_bitcnt_t mpn_popcount (mp_srcptr, mp_size_t);
+mp_bitcnt_t __gmpn_popcount (mp_srcptr, mp_size_t);
 
-mp_limb_t mpn_invert_3by2 (mp_limb_t, mp_limb_t);
-#define mpn_invert_limb(x) mpn_invert_3by2 ((x), 0)
+mp_limb_t __gmpn_invert_3by2 (mp_limb_t, mp_limb_t);
+#define __gmpn_invert_limb(x) __gmpn_invert_3by2 ((x), 0)
 
-size_t mpn_get_str (unsigned char *, int, mp_ptr, mp_size_t);
-mp_size_t mpn_set_str (mp_ptr, const unsigned char *, size_t, int);
+size_t __gmpn_get_str (unsigned char *, int, mp_ptr, mp_size_t);
+mp_size_t __gmpn_set_str (mp_ptr, const unsigned char *, size_t, int);
 
 void __gmpz_init (mpz_t);
 void __gmpz_init2 (mpz_t, mp_bitcnt_t);

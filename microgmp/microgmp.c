@@ -338,14 +338,14 @@ gmp_xrealloc_limbs (mp_ptr old, mp_size_t size)
 
 
 /* MPN interface */
-
-void
-mpn_copyi (mp_ptr d, mp_srcptr s, mp_size_t n)
-{
-  mp_size_t i;
-  for (i = 0; i < n; i++)
-    d[i] = s[i];
-}
+//
+//void
+//__gmpn_copyi (mp_ptr d, mp_srcptr s, mp_size_t n)
+//{
+//  mp_size_t i;
+//  for (i = 0; i < n; i++)
+//    d[i] = s[i];
+//}
 
 void
 mpn_copyd (mp_ptr d, mp_srcptr s, mp_size_t n)
@@ -371,7 +371,7 @@ mpn_cmp4 (mp_srcptr ap, mp_size_t an, mp_srcptr bp, mp_size_t bn)
   if (an != bn)
     return an < bn ? -1 : 1;
   else
-    return mpn_cmp (ap, bp, an);
+    return __gmpn_cmp (ap, bp, an);
 }
 
 static mp_size_t
@@ -385,7 +385,7 @@ mpn_normalized_size (mp_srcptr xp, mp_size_t n)
 int
 mpn_zero_p(mp_srcptr rp, mp_size_t n)
 {
-  return mpn_normalized_size (rp, n) == 0;
+  return __gmpn_normalized_size (rp, n) == 0;
 }
 
 void
@@ -440,9 +440,9 @@ mpn_add (mp_ptr rp, mp_srcptr ap, mp_size_t an, mp_srcptr bp, mp_size_t bn)
 
   assert (an >= bn);
 
-  cy = mpn_add_n (rp, ap, bp, bn);
+  cy = __gmpn_add_n (rp, ap, bp, bn);
   if (an > bn)
-    cy = mpn_add_1 (rp + bn, ap + bn, an - bn, cy);
+    cy = __gmpn_add_1 (rp + bn, ap + bn, an - bn, cy);
   return cy;
 }
 
@@ -492,9 +492,9 @@ mpn_sub (mp_ptr rp, mp_srcptr ap, mp_size_t an, mp_srcptr bp, mp_size_t bn)
 
   assert (an >= bn);
 
-  cy = mpn_sub_n (rp, ap, bp, bn);
+  cy = __gmpn_sub_n (rp, ap, bp, bn);
   if (an > bn)
-    cy = mpn_sub_1 (rp + bn, ap + bn, an - bn, cy);
+    cy = __gmpn_sub_1 (rp + bn, ap + bn, an - bn, cy);
   return cy;
 }
 
@@ -583,7 +583,7 @@ mpn_mul (mp_ptr rp, mp_srcptr up, mp_size_t un, mp_srcptr vp, mp_size_t vn)
      stored, not added, to rp. We also avoid a loop for zeroing this
      way. */
 
-  rp[un] = mpn_mul_1 (rp, up, un, vp[0]);
+  rp[un] = __gmpn_mul_1 (rp, up, un, vp[0]);
 
   /* Now accumulate the product of up[] and the next higher limb from
      vp[]. */
@@ -591,7 +591,7 @@ mpn_mul (mp_ptr rp, mp_srcptr up, mp_size_t un, mp_srcptr vp, mp_size_t vn)
   while (--vn >= 1)
     {
       rp += 1, vp += 1;
-      rp[un] = mpn_addmul_1 (rp, up, un, vp[0]);
+      rp[un] = __gmpn_addmul_1 (rp, up, un, vp[0]);
     }
   return rp[un];
 }
@@ -599,13 +599,13 @@ mpn_mul (mp_ptr rp, mp_srcptr up, mp_size_t un, mp_srcptr vp, mp_size_t vn)
 void
 mpn_mul_n (mp_ptr rp, mp_srcptr ap, mp_srcptr bp, mp_size_t n)
 {
-  mpn_mul (rp, ap, n, bp, n);
+  __gmpn_mul (rp, ap, n, bp, n);
 }
 
 void
 mpn_sqr (mp_ptr rp, mp_srcptr ap, mp_size_t n)
 {
-  mpn_mul (rp, ap, n, ap, n);
+  __gmpn_mul (rp, ap, n, ap, n);
 }
 
 mp_limb_t
@@ -691,7 +691,7 @@ mpn_scan1 (mp_srcptr ptr, mp_bitcnt_t bit)
   mp_size_t i;
   i = bit / GMP_LIMB_BITS;
 
-  return mpn_common_scan ( ptr[i] & (GMP_LIMB_MAX << (bit % GMP_LIMB_BITS)),
+  return __gmpn_common_scan ( ptr[i] & (GMP_LIMB_MAX << (bit % GMP_LIMB_BITS)),
 			  i, ptr, i, 0);
 }
 
@@ -701,7 +701,7 @@ mpn_scan0 (mp_srcptr ptr, mp_bitcnt_t bit)
   mp_size_t i;
   i = bit / GMP_LIMB_BITS;
 
-  return mpn_common_scan (~ptr[i] & (GMP_LIMB_MAX << (bit % GMP_LIMB_BITS)),
+  return __gmpn_common_scan (~ptr[i] & (GMP_LIMB_MAX << (bit % GMP_LIMB_BITS)),
 			  i, ptr, i, GMP_LIMB_MAX);
 }
 
@@ -723,7 +723,7 @@ mpn_neg (mp_ptr rp, mp_srcptr up, mp_size_t n)
       ++up; ++rp;
     }
   *rp = - *up;
-  mpn_com (++rp, ++up, --n);
+  __gmpn_com (++rp, ++up, --n);
   return 1;
 }
 
@@ -844,7 +844,7 @@ struct gmp_div_inverse
 {
   /* Normalization shift count. */
   unsigned shift;
-  /* Normalized divisor (d0 unused for mpn_div_qr_1) */
+  /* Normalized divisor (d0 unused for __gmpn_div_qr_1) */
   mp_limb_t d1, d0;
   /* Inverse, for 2/1 or 3/2. */
   mp_limb_t di;
@@ -859,7 +859,7 @@ mpn_div_qr_1_invert (struct gmp_div_inverse *inv, mp_limb_t d)
   gmp_clz (shift, d);
   inv->shift = shift;
   inv->d1 = d << shift;
-  inv->di = mpn_invert_limb (inv->d1);
+  inv->di = __gmpn_invert_limb (inv->d1);
 }
 
 static void
@@ -878,7 +878,7 @@ mpn_div_qr_2_invert (struct gmp_div_inverse *inv,
     }
   inv->d1 = d1;
   inv->d0 = d0;
-  inv->di = mpn_invert_3by2 (d1, d0);
+  inv->di = __gmpn_invert_3by2 (d1, d0);
 }
 
 static void
@@ -888,9 +888,9 @@ mpn_div_qr_invert (struct gmp_div_inverse *inv,
   assert (dn > 0);
 
   if (dn == 1)
-    mpn_div_qr_1_invert (inv, dp[0]);
+    __gmpn_div_qr_1_invert (inv, dp[0]);
   else if (dn == 2)
-    mpn_div_qr_2_invert (inv, dp[1], dp[0]);
+    __gmpn_div_qr_2_invert (inv, dp[1], dp[0]);
   else
     {
       unsigned shift;
@@ -908,7 +908,7 @@ mpn_div_qr_invert (struct gmp_div_inverse *inv,
 	}
       inv->d1 = d1;
       inv->d0 = d0;
-      inv->di = mpn_invert_3by2 (d1, d0);
+      inv->di = __gmpn_invert_3by2 (d1, d0);
     }
 }
 
@@ -925,7 +925,7 @@ mpn_div_qr_1_preinv (mp_ptr qp, mp_srcptr np, mp_size_t nn,
   if (inv->shift > 0)
     {
       tp = gmp_xalloc_limbs (nn);
-      r = mpn_lshift (tp, np, nn, inv->shift);
+      r = __gmpn_lshift (tp, np, nn, inv->shift);
       np = tp;
     }
   else
@@ -959,12 +959,12 @@ mpn_div_qr_1 (mp_ptr qp, mp_srcptr np, mp_size_t nn, mp_limb_t d)
       if (qp)
 	{
 	  if (d <= 1)
-	    mpn_copyi (qp, np, nn);
+	    __gmpn_copyi (qp, np, nn);
 	  else
 	    {
 	      unsigned shift;
 	      gmp_ctz (shift, d);
-	      mpn_rshift (qp, np, nn, shift);
+	      __gmpn_rshift (qp, np, nn, shift);
 	    }
 	}
       return r;
@@ -972,8 +972,8 @@ mpn_div_qr_1 (mp_ptr qp, mp_srcptr np, mp_size_t nn, mp_limb_t d)
   else
     {
       struct gmp_div_inverse inv;
-      mpn_div_qr_1_invert (&inv, d);
-      return mpn_div_qr_1_preinv (qp, np, nn, &inv);
+      __gmpn_div_qr_1_invert (&inv, d);
+      return __gmpn_div_qr_1_preinv (qp, np, nn, &inv);
     }
 }
 
@@ -995,7 +995,7 @@ mpn_div_qr_2_preinv (mp_ptr qp, mp_ptr rp, mp_srcptr np, mp_size_t nn,
   if (shift > 0)
     {
       tp = gmp_xalloc_limbs (nn);
-      r1 = mpn_lshift (tp, np, nn, shift);
+      r1 = __gmpn_lshift (tp, np, nn, shift);
       np = tp;
     }
   else
@@ -1036,8 +1036,8 @@ mpn_div_qr_2 (mp_ptr qp, mp_ptr rp, mp_srcptr np, mp_size_t nn,
   struct gmp_div_inverse inv;
   assert (nn >= 2);
 
-  mpn_div_qr_2_invert (&inv, d1, d0);
-  mpn_div_qr_2_preinv (qp, rp, np, nn, &inv);
+  __gmpn_div_qr_2_invert (&inv, d1, d0);
+  __gmpn_div_qr_2_preinv (qp, rp, np, nn, &inv);
 }
 #endif
 
@@ -1074,14 +1074,14 @@ mpn_div_qr_pi1 (mp_ptr qp,
       if (n1 == d1 && n0 == d0)
 	{
 	  q = GMP_LIMB_MAX;
-	  mpn_submul_1 (np+i, dp, dn, q);
+	  __gmpn_submul_1 (np+i, dp, dn, q);
 	  n1 = np[dn-1+i];	/* update n1, last loop's value will now be invalid */
 	}
       else
 	{
 	  gmp_udiv_qr_3by2 (q, n1, n0, n1, n0, np[dn-2+i], d1, d0, dinv);
 
-	  cy = mpn_submul_1 (np + i, dp, dn-2, q);
+	  cy = __gmpn_submul_1 (np + i, dp, dn-2, q);
 
 	  cy1 = n0 < cy;
 	  n0 = n0 - cy;
@@ -1091,7 +1091,7 @@ mpn_div_qr_pi1 (mp_ptr qp,
 
 	  if (cy != 0)
 	    {
-	      n1 += d1 + mpn_add_n (np + i, np + i, dp, dn - 1);
+	      n1 += d1 + __gmpn_add_n (np + i, np + i, dp, dn - 1);
 	      q--;
 	    }
 	}
@@ -1113,9 +1113,9 @@ mpn_div_qr_preinv (mp_ptr qp, mp_ptr np, mp_size_t nn,
   assert (nn >= dn);
 
   if (dn == 1)
-    np[0] = mpn_div_qr_1_preinv (qp, np, nn, inv);
+    np[0] = __gmpn_div_qr_1_preinv (qp, np, nn, inv);
   else if (dn == 2)
-    mpn_div_qr_2_preinv (qp, np, np, nn, inv);
+    __gmpn_div_qr_2_preinv (qp, np, np, nn, inv);
   else
     {
       mp_limb_t nh;
@@ -1127,11 +1127,11 @@ mpn_div_qr_preinv (mp_ptr qp, mp_ptr np, mp_size_t nn,
 
       shift = inv->shift;
       if (shift > 0)
-	nh = mpn_lshift (np, np, nn, shift);
+	nh = __gmpn_lshift (np, np, nn, shift);
       else
 	nh = 0;
 
-      mpn_div_qr_pi1 (qp, np, nn, nh, dp, dn, inv->di);
+      __gmpn_div_qr_pi1 (qp, np, nn, nh, dp, dn, inv->di);
 
       if (shift > 0)
 	gmp_assert_nocarry (mpn_rshift (np, np, dn, shift));
@@ -1147,14 +1147,14 @@ mpn_div_qr (mp_ptr qp, mp_ptr np, mp_size_t nn, mp_srcptr dp, mp_size_t dn)
   assert (dn > 0);
   assert (nn >= dn);
 
-  mpn_div_qr_invert (&inv, dp, dn);
+  __gmpn_div_qr_invert (&inv, dp, dn);
   if (dn > 2 && inv.shift > 0)
     {
       tp = gmp_xalloc_limbs (dn);
       gmp_assert_nocarry (mpn_lshift (tp, dp, dn, inv.shift));
       dp = tp;
     }
-  mpn_div_qr_preinv (qp, np, nn, dp, dn, &inv);
+  __gmpn_div_qr_preinv (qp, np, nn, dp, dn, &inv);
   if (tp)
     gmp_free (tp);
 }
@@ -1178,7 +1178,7 @@ mpn_base_power_of_two_p (unsigned b)
     }
 }
 
-struct mpn_base_info
+struct __gmpn_base_info
 {
   /* bb is the largest power of the base which fits in one limb, and
      exp is the corresponding exponent. */
@@ -1187,7 +1187,7 @@ struct mpn_base_info
 };
 
 static void
-mpn_get_base_info (struct mpn_base_info *info, mp_limb_t b)
+mpn_get_base_info (struct __gmpn_base_info *info, mp_limb_t b)
 {
   mp_limb_t m;
   mp_limb_t p;
@@ -1219,7 +1219,7 @@ mpn_get_str_bits (unsigned char *sp, unsigned bits, mp_srcptr up, mp_size_t un)
   mp_size_t i;
   unsigned shift;
 
-  sn = ((un - 1) * GMP_LIMB_BITS + mpn_limb_size_in_base_2 (up[un-1])
+  sn = ((un - 1) * GMP_LIMB_BITS + __gmpn_limb_size_in_base_2 (up[un-1])
 	+ bits - 1) / bits;
 
   mask = (1U << bits) - 1;
@@ -1265,36 +1265,36 @@ mpn_limb_get_str (unsigned char *sp, mp_limb_t w,
 
 static size_t
 mpn_get_str_other (unsigned char *sp,
-		   int base, const struct mpn_base_info *info,
+		   int base, const struct __gmpn_base_info *info,
 		   mp_ptr up, mp_size_t un)
 {
   struct gmp_div_inverse binv;
   size_t sn;
   size_t i;
 
-  mpn_div_qr_1_invert (&binv, base);
+  __gmpn_div_qr_1_invert (&binv, base);
 
   sn = 0;
 
   if (un > 1)
     {
       struct gmp_div_inverse bbinv;
-      mpn_div_qr_1_invert (&bbinv, info->bb);
+      __gmpn_div_qr_1_invert (&bbinv, info->bb);
 
       do
 	{
 	  mp_limb_t w;
 	  size_t done;
-	  w = mpn_div_qr_1_preinv (up, up, un, &bbinv);
+	  w = __gmpn_div_qr_1_preinv (up, up, un, &bbinv);
 	  un -= (up[un-1] == 0);
-	  done = mpn_limb_get_str (sp + sn, w, &binv);
+	  done = __gmpn_limb_get_str (sp + sn, w, &binv);
 
 	  for (sn += done; done < info->exp; done++)
 	    sp[sn++] = 0;
 	}
       while (un > 1);
     }
-  sn += mpn_limb_get_str (sp + sn, up[0], &binv);
+  sn += __gmpn_limb_get_str (sp + sn, up[0], &binv);
 
   /* Reverse order */
   for (i = 0; 2*i + 1 < sn; i++)
@@ -1315,15 +1315,15 @@ mpn_get_str (unsigned char *sp, int base, mp_ptr up, mp_size_t un)
   assert (un > 0);
   assert (up[un-1] > 0);
 
-  bits = mpn_base_power_of_two_p (base);
+  bits = __gmpn_base_power_of_two_p (base);
   if (bits)
-    return mpn_get_str_bits (sp, bits, up, un);
+    return __gmpn_get_str_bits (sp, bits, up, un);
   else
     {
-      struct mpn_base_info info;
+      struct __gmpn_base_info info;
 
-      mpn_get_base_info (&info, base);
-      return mpn_get_str_other (sp, base, &info, up, un);
+      __gmpn_get_base_info (&info, base);
+      return __gmpn_get_str_other (sp, base, &info, up, un);
     }
 }
 
@@ -1354,7 +1354,7 @@ mpn_set_str_bits (mp_ptr rp, const unsigned char *sp, size_t sn,
 	    }
 	}
     }
-  rn = mpn_normalized_size (rp, rn);
+  rn = __gmpn_normalized_size (rp, rn);
   return rn;
 }
 
@@ -1362,7 +1362,7 @@ mpn_set_str_bits (mp_ptr rp, const unsigned char *sp, size_t sn,
    case a single zero limb is written at *RP, and 1 is returned. */
 static mp_size_t
 mpn_set_str_other (mp_ptr rp, const unsigned char *sp, size_t sn,
-		   mp_limb_t b, const struct mpn_base_info *info)
+		   mp_limb_t b, const struct __gmpn_base_info *info)
 {
   mp_size_t rn;
   mp_limb_t w;
@@ -1388,8 +1388,8 @@ mpn_set_str_other (mp_ptr rp, const unsigned char *sp, size_t sn,
       for (k = 1; k < info->exp; k++)
 	w = w * b + sp[j++];
 
-      cy = mpn_mul_1 (rp, rp, rn, info->bb);
-      cy += mpn_add_1 (rp, rp, rn, w);
+      cy = __gmpn_mul_1 (rp, rp, rn, info->bb);
+      cy += __gmpn_add_1 (rp, rp, rn, w);
       if (cy > 0)
 	rp[rn++] = cy;
     }
@@ -1406,15 +1406,15 @@ mpn_set_str (mp_ptr rp, const unsigned char *sp, size_t sn, int base)
   if (sn == 0)
     return 0;
 
-  bits = mpn_base_power_of_two_p (base);
+  bits = __gmpn_base_power_of_two_p (base);
   if (bits)
-    return mpn_set_str_bits (rp, sp, sn, bits);
+    return __gmpn_set_str_bits (rp, sp, sn, bits);
   else
     {
-      struct mpn_base_info info;
+      struct __gmpn_base_info info;
 
-      mpn_get_base_info (&info, base);
-      return mpn_set_str_other (rp, sp, sn, base, &info);
+      __gmpn_get_base_info (&info, base);
+      return __gmpn_set_str_other (rp, sp, sn, base, &info);
     }
 }
 
@@ -1511,7 +1511,7 @@ __gmpz_set (mpz_t r, const mpz_t x)
       n = GMP_ABS (x->_mp_size);
       rp = __gmpz_REALLOC (r, n);
 
-      mpn_copyi (rp, x->_mp_d, n);
+      __gmpn_copyi (rp, x->_mp_d, n);
       r->_mp_size = x->_mp_size;
     }
 }
@@ -1618,7 +1618,7 @@ void
 __gmpz_limbs_finish (mpz_t x, mp_size_t xs)
 {
   mp_size_t xn;
-  xn = mpn_normalized_size (x->_mp_d, GMP_ABS (xs));
+  xn = __gmpn_normalized_size (x->_mp_d, GMP_ABS (xs));
   x->_mp_size = xs < 0 ? -xn : xn;
 }
 
@@ -1818,9 +1818,9 @@ __gmpz_cmp (const mpz_t a, const mpz_t b)
   if (asize != bsize)
     return (asize < bsize) ? -1 : 1;
   else if (asize >= 0)
-    return mpn_cmp (a->_mp_d, b->_mp_d, asize);
+    return __gmpn_cmp (a->_mp_d, b->_mp_d, asize);
   else
-    return mpn_cmp (b->_mp_d, a->_mp_d, -asize);
+    return __gmpn_cmp (b->_mp_d, a->_mp_d, -asize);
 }
 
 int
@@ -1835,7 +1835,7 @@ __gmpz_cmpabs_ui (const mpz_t u, unsigned long v)
 int
 __gmpz_cmpabs (const mpz_t u, const mpz_t v)
 {
-  return mpn_cmp4 (u->_mp_d, GMP_ABS (u->_mp_size),
+  return __gmpn_cmp4 (u->_mp_d, GMP_ABS (u->_mp_size),
 		   v->_mp_d, GMP_ABS (v->_mp_size));
 }
 
@@ -1881,7 +1881,7 @@ __gmpz_abs_add_ui (mpz_t r, const mpz_t a, unsigned long b)
 
   rp = __gmpz_REALLOC (r, an + 1);
 
-  cy = mpn_add_1 (rp, a->_mp_d, an, b);
+  cy = __gmpn_add_1 (rp, a->_mp_d, an, b);
   rp[an] = cy;
   an += cy;
 
@@ -1910,7 +1910,7 @@ __gmpz_abs_sub_ui (mpz_t r, const mpz_t a, unsigned long b)
   else
     {
       gmp_assert_nocarry (mpn_sub_1 (rp, a->_mp_d, an, b));
-      return mpn_normalized_size (rp, an);
+      return __gmpn_normalized_size (rp, an);
     }
 }
 
@@ -1956,7 +1956,7 @@ __gmpz_abs_add (mpz_t r, const mpz_t a, const mpz_t b)
     }
 
   rp = __gmpz_REALLOC (r, an + 1);
-  cy = mpn_add (rp, a->_mp_d, an, b->_mp_d, bn);
+  cy = __gmpn_add (rp, a->_mp_d, an, b->_mp_d, bn);
 
   rp[an] = cy;
 
@@ -1971,12 +1971,12 @@ __gmpz_abs_sub (mpz_t r, const mpz_t a, const mpz_t b)
   int cmp;
   mp_ptr rp;
 
-  cmp = mpn_cmp4 (a->_mp_d, an, b->_mp_d, bn);
+  cmp = __gmpn_cmp4 (a->_mp_d, an, b->_mp_d, bn);
   if (cmp > 0)
     {
       rp = __gmpz_REALLOC (r, an);
       gmp_assert_nocarry (mpn_sub (rp, a->_mp_d, an, b->_mp_d, bn));
-      return mpn_normalized_size (rp, an);
+      return __gmpn_normalized_size (rp, an);
     }
   else if (cmp < 0)
     {
@@ -2046,7 +2046,7 @@ __gmpz_mul_ui (mpz_t r, const mpz_t u, unsigned long int v)
   un = GMP_ABS (us);
 
   tp = __gmpz_REALLOC (r, un + 1);
-  cy = mpn_mul_1 (tp, u->_mp_d, un, v);
+  cy = __gmpn_mul_1 (tp, u->_mp_d, un, v);
   tp[un] = cy;
 
   un += (cy > 0);
@@ -2079,9 +2079,9 @@ __gmpz_mul (mpz_t r, const mpz_t u, const mpz_t v)
 
   tp = t->_mp_d;
   if (un >= vn)
-    mpn_mul (tp, u->_mp_d, un, v->_mp_d, vn);
+    __gmpn_mul (tp, u->_mp_d, un, v->_mp_d, vn);
   else
-    mpn_mul (tp, v->_mp_d, vn, u->_mp_d, un);
+    __gmpn_mul (tp, v->_mp_d, vn, u->_mp_d, un);
 
   rn = un + vn;
   rn -= tp[rn-1] == 0;
@@ -2113,14 +2113,14 @@ __gmpz_mul_2exp (mpz_t r, const mpz_t u, mp_bitcnt_t bits)
   rp = __gmpz_REALLOC (r, rn);
   if (shift > 0)
     {
-      mp_limb_t cy = mpn_lshift (rp + limbs, u->_mp_d, un, shift);
+      mp_limb_t cy = __gmpn_lshift (rp + limbs, u->_mp_d, un, shift);
       rp[rn-1] = cy;
       rn -= (cy == 0);
     }
   else
-    mpn_copyd (rp + limbs, u->_mp_d, un);
+    __gmpn_copyd (rp + limbs, u->_mp_d, un);
 
-  mpn_zero (rp, limbs);
+  __gmpn_zero (rp, limbs);
 
   r->_mp_size = (u->_mp_size < 0) ? - rn : rn;
 }
@@ -2242,7 +2242,7 @@ __gmpz_div_qr (mpz_t q, mpz_t r,
       else
 	qp = NULL;
 
-      mpn_div_qr (qp, np, nn, d->_mp_d, dn);
+      __gmpn_div_qr (qp, np, nn, d->_mp_d, dn);
 
       if (qp)
 	{
@@ -2250,7 +2250,7 @@ __gmpz_div_qr (mpz_t q, mpz_t r,
 
 	  tq->_mp_size = qs < 0 ? -qn : qn;
 	}
-      rn = mpn_normalized_size (np, dn);
+      rn = __gmpn_normalized_size (np, dn);
       tr->_mp_size = ns < 0 ? - rn : rn;
 
       if (mode == GMP_DIV_FLOOR && qs < 0 && rn != 0)
@@ -2379,12 +2379,12 @@ __gmpz_div_q_2exp (mpz_t q, const mpz_t u, mp_bitcnt_t bit_index,
 
       if (bit_index != 0)
 	{
-	  mpn_rshift (qp, u->_mp_d + limb_cnt, qn, bit_index);
+	  __gmpn_rshift (qp, u->_mp_d + limb_cnt, qn, bit_index);
 	  qn -= qp[qn - 1] == 0;
 	}
       else
 	{
-	  mpn_copyi (qp, u->_mp_d + limb_cnt, qn);
+	  __gmpn_copyi (qp, u->_mp_d + limb_cnt, qn);
 	}
     }
 
@@ -2427,7 +2427,7 @@ __gmpz_div_r_2exp (mpz_t r, const mpz_t u, mp_bitcnt_t bit_index,
 	  /* Have to negate and sign extend. */
 	  mp_size_t i;
 
-	  gmp_assert_nocarry (! mpn_neg (rp, u->_mp_d, un));
+	  gmp_assert_nocarry (! __gmpn_neg (rp, u->_mp_d, un));
 	  for (i = un; i < rn - 1; i++)
 	    rp[i] = GMP_LIMB_MAX;
 
@@ -2438,7 +2438,7 @@ __gmpz_div_r_2exp (mpz_t r, const mpz_t u, mp_bitcnt_t bit_index,
 	{
 	  /* Just copy */
 	  if (r != u)
-	    mpn_copyi (rp, u->_mp_d, un);
+	    __gmpn_copyi (rp, u->_mp_d, un);
 
 	  rn = un;
 	}
@@ -2446,14 +2446,14 @@ __gmpz_div_r_2exp (mpz_t r, const mpz_t u, mp_bitcnt_t bit_index,
   else
     {
       if (r != u)
-	mpn_copyi (rp, u->_mp_d, rn - 1);
+	__gmpn_copyi (rp, u->_mp_d, rn - 1);
 
       rp[rn-1] = u->_mp_d[rn-1] & mask;
 
       if (mode == ((us > 0) ? GMP_DIV_CEIL : GMP_DIV_FLOOR)) /* us != 0 here. */
 	{
 	  /* If r != 0, compute 2^{bit_count} - r. */
-	  mpn_neg (rp, rp, rn);
+	  __gmpn_neg (rp, rp, rn);
 
 	  rp[rn-1] &= mask;
 
@@ -2462,7 +2462,7 @@ __gmpz_div_r_2exp (mpz_t r, const mpz_t u, mp_bitcnt_t bit_index,
 	  us = -us;
 	}
     }
-  rn = mpn_normalized_size (rp, rn);
+  rn = __gmpn_normalized_size (rp, rn);
   r->_mp_size = us < 0 ? -rn : rn;
 }
 
@@ -2557,7 +2557,7 @@ __gmpz_div_qr_ui (mpz_t q, mpz_t r,
   else
     qp = NULL;
 
-  rl = mpn_div_qr_1 (qp, n->_mp_d, qn, d);
+  rl = __gmpn_div_qr_1 (qp, n->_mp_d, qn, d);
   assert (rl < d);
 
   rs = rl > 0;
@@ -2735,7 +2735,7 @@ __gmpz_gcd_ui (mpz_t g, const mpz_t u, unsigned long v)
     {
       un = GMP_ABS (u->_mp_size);
       if (un != 0)
-	v = mpn_gcd_11 (mpn_div_qr_1 (NULL, u->_mp_d, un, v), v);
+	v = __gmpn_gcd_11 (mpn_div_qr_1 (NULL, u->_mp_d, un, v), v);
 
       if (g)
 	__gmpz_set_ui (g, v);
@@ -2750,8 +2750,8 @@ __gmpz_make_odd (mpz_t r)
   mp_bitcnt_t shift;
 
   assert (r->_mp_size > 0);
-  /* Count trailing zeros, equivalent to mpn_scan1, because we know that there is a 1 */
-  shift = mpn_common_scan (r->_mp_d[0], 0, r->_mp_d, 0, 0);
+  /* Count trailing zeros, equivalent to __gmpn_scan1, because we know that there is a 1 */
+  shift = __gmpn_common_scan (r->_mp_d[0], 0, r->_mp_d, 0, 0);
   __gmpz_tdiv_q_2exp (r, r, shift);
 
   return shift;
@@ -2810,7 +2810,7 @@ __gmpz_gcd (mpz_t g, const mpz_t u, const mpz_t v)
 	  {
 	    mp_limb_t vl = tv->_mp_d[0];
 	    mp_limb_t ul = __gmpz_tdiv_ui (tu, vl);
-	    __gmpz_set_ui (g, mpn_gcd_11 (ul, vl));
+	    __gmpz_set_ui (g, __gmpn_gcd_11 (ul, vl));
 	    break;
 	  }
 	__gmpz_sub (tu, tu, tv);
@@ -3124,7 +3124,7 @@ __gmpz_powm (mpz_t r, const mpz_t b, const mpz_t e, const mpz_t m)
     }
 
   mp = m->_mp_d;
-  mpn_div_qr_invert (&minv, mp, mn);
+  __gmpn_div_qr_invert (&minv, mp, mn);
   shift = minv.shift;
 
   if (shift > 0)
@@ -3153,7 +3153,7 @@ __gmpz_powm (mpz_t r, const mpz_t b, const mpz_t e, const mpz_t m)
       bn = base->_mp_size;
       if (bn >= mn)
 	{
-	  mpn_div_qr_preinv (NULL, base->_mp_d, base->_mp_size, mp, mn, &minv);
+	  __gmpn_div_qr_preinv (NULL, base->_mp_d, base->_mp_size, mp, mn, &minv);
 	  bn = mn;
 	}
 
@@ -3166,7 +3166,7 @@ __gmpz_powm (mpz_t r, const mpz_t b, const mpz_t e, const mpz_t m)
 	  gmp_assert_nocarry (mpn_sub (bp, mp, mn, bp, bn));
 	  bn = mn;
 	}
-      base->_mp_size = mpn_normalized_size (base->_mp_d, bn);
+      base->_mp_size = __gmpn_normalized_size (base->_mp_d, bn);
     }
   __gmpz_init_set_ui (tr, 1);
 
@@ -3183,8 +3183,8 @@ __gmpz_powm (mpz_t r, const mpz_t b, const mpz_t e, const mpz_t m)
 	    __gmpz_mul (tr, tr, base);
 	  if (tr->_mp_size > mn)
 	    {
-	      mpn_div_qr_preinv (NULL, tr->_mp_d, tr->_mp_size, mp, mn, &minv);
-	      tr->_mp_size = mpn_normalized_size (tr->_mp_d, mn);
+	      __gmpn_div_qr_preinv (NULL, tr->_mp_d, tr->_mp_size, mp, mn, &minv);
+	      tr->_mp_size = __gmpn_normalized_size (tr->_mp_d, mn);
 	    }
 	  bit >>= 1;
 	}
@@ -3195,8 +3195,8 @@ __gmpz_powm (mpz_t r, const mpz_t b, const mpz_t e, const mpz_t m)
   if (tr->_mp_size >= mn)
     {
       minv.shift = shift;
-      mpn_div_qr_preinv (NULL, tr->_mp_d, tr->_mp_size, mp, mn, &minv);
-      tr->_mp_size = mpn_normalized_size (tr->_mp_d, mn);
+      __gmpn_div_qr_preinv (NULL, tr->_mp_d, tr->_mp_size, mp, mn, &minv);
+      tr->_mp_size = __gmpn_normalized_size (tr->_mp_d, mn);
     }
   if (tp)
     gmp_free (tp);
@@ -3334,11 +3334,11 @@ mpn_sqrtrem (mp_ptr sp, mp_ptr rp, mp_srcptr p, mp_size_t n)
   __gmpz_rootrem (s, r, __gmpz_roinit_n (u, p, n), 2);
 
   assert (s->_mp_size == (n+1)/2);
-  mpn_copyd (sp, s->_mp_d, s->_mp_size);
+  __gmpn_copyd (sp, s->_mp_d, s->_mp_size);
   __gmpz_clear (s);
   res = r->_mp_size;
   if (rp)
-    mpn_copyd (rp, r->_mp_d, res);
+    __gmpn_copyd (rp, r->_mp_d, res);
   __gmpz_clear (r);
   return res;
 }
@@ -3557,7 +3557,7 @@ __gmpz_abs_add_bit (mpz_t d, mp_bitcnt_t bit_index)
 
       dp = d->_mp_d;
 
-      cy = mpn_add_1 (dp + limb_index, dp + limb_index, dn - limb_index, bit);
+      cy = __gmpn_add_1 (dp + limb_index, dp + limb_index, dn - limb_index, bit);
       if (cy > 0)
 	{
 	  dp = __gmpz_REALLOC (d, dn + 1);
@@ -3585,7 +3585,7 @@ __gmpz_abs_sub_bit (mpz_t d, mp_bitcnt_t bit_index)
 
   gmp_assert_nocarry (mpn_sub_1 (dp + limb_index, dp + limb_index,
 				 dn - limb_index, bit));
-  dn = mpn_normalized_size (dp, dn);
+  dn = __gmpn_normalized_size (dp, dn);
   d->_mp_size = (d->_mp_size < 0) ? - dn : dn;
 }
 
@@ -3696,7 +3696,7 @@ __gmpz_and (mpz_t r, const mpz_t u, const mpz_t v)
   if (rc)
     rp[rn++] = rc;
   else
-    rn = mpn_normalized_size (rp, rn);
+    rn = __gmpn_normalized_size (rp, rn);
 
   r->_mp_size = rx ? -rn : rn;
 }
@@ -3769,7 +3769,7 @@ __gmpz_ior (mpz_t r, const mpz_t u, const mpz_t v)
   if (rc)
     rp[rn++] = rc;
   else
-    rn = mpn_normalized_size (rp, rn);
+    rn = __gmpn_normalized_size (rp, rn);
 
   r->_mp_size = rx ? -rn : rn;
 }
@@ -3838,7 +3838,7 @@ __gmpz_xor (mpz_t r, const mpz_t u, const mpz_t v)
   if (rc)
     rp[un++] = rc;
   else
-    un = mpn_normalized_size (rp, un);
+    un = __gmpn_normalized_size (rp, un);
 
   r->_mp_size = rx ? -un : un;
 }
@@ -3882,7 +3882,7 @@ __gmpz_popcount (const mpz_t u)
   if (un < 0)
     return ~(mp_bitcnt_t) 0;
 
-  return mpn_popcount (u->_mp_d, un);
+  return __gmpn_popcount (u->_mp_d, un);
 }
 
 mp_bitcnt_t
@@ -3960,7 +3960,7 @@ __gmpz_scan1 (const mpz_t u, mp_bitcnt_t starting_bit)
     {
       if (us < 0)
 	{
-	  ux = mpn_zero_p (up, i);
+	  ux = __gmpn_zero_p (up, i);
 	  limb = ~ limb + ux;
 	  ux = - (mp_limb_t) (limb >= ux);
 	}
@@ -3969,7 +3969,7 @@ __gmpz_scan1 (const mpz_t u, mp_bitcnt_t starting_bit)
       limb &= (GMP_LIMB_MAX << (starting_bit % GMP_LIMB_BITS));
     }
 
-  return mpn_common_scan (limb, i, up, un, ux);
+  return __gmpn_common_scan (limb, i, up, un, ux);
 }
 
 mp_bitcnt_t
@@ -3993,12 +3993,12 @@ __gmpz_scan0 (const mpz_t u, mp_bitcnt_t starting_bit)
   limb = up[i] ^ ux;
 
   if (ux == 0)
-    limb -= mpn_zero_p (up, i); /* limb = ~(~limb + zero_p) */
+    limb -= __gmpn_zero_p (up, i); /* limb = ~(~limb + zero_p) */
 
   /* Mask all bits before starting_bit, thus ignoring them. */
   limb &= (GMP_LIMB_MAX << (starting_bit % GMP_LIMB_BITS));
 
-  return mpn_common_scan (limb, i, up, un, ux);
+  return __gmpn_common_scan (limb, i, up, un, ux);
 }
 
 
@@ -4023,7 +4023,7 @@ __gmpz_sizeinbase (const mpz_t u, int base)
 
   up = u->_mp_d;
 
-  bits = (un - 1) * GMP_LIMB_BITS + mpn_limb_size_in_base_2 (up[un-1]);
+  bits = (un - 1) * GMP_LIMB_BITS + __gmpn_limb_size_in_base_2 (up[un-1]);
   switch (base)
     {
     case 2:
@@ -4041,14 +4041,14 @@ __gmpz_sizeinbase (const mpz_t u, int base)
     }
 
   tp = gmp_xalloc_limbs (un);
-  mpn_copyi (tp, up, un);
-  mpn_div_qr_1_invert (&bi, base);
+  __gmpn_copyi (tp, up, un);
+  __gmpn_div_qr_1_invert (&bi, base);
 
   ndigits = 0;
   do
     {
       ndigits++;
-      mpn_div_qr_1_preinv (tp, tp, un, &bi);
+      __gmpn_div_qr_1_preinv (tp, tp, un, &bi);
       un -= (tp[un-1] == 0);
     }
   while (un > 0);
@@ -4097,21 +4097,21 @@ __gmpz_get_str (char *sp, int base, const mpz_t u)
   if (u->_mp_size < 0)
     sp[i++] = '-';
 
-  bits = mpn_base_power_of_two_p (base);
+  bits = __gmpn_base_power_of_two_p (base);
 
   if (bits)
     /* Not modified in this case. */
-    sn = i + mpn_get_str_bits ((unsigned char *) sp + i, bits, u->_mp_d, un);
+    sn = i + __gmpn_get_str_bits ((unsigned char *) sp + i, bits, u->_mp_d, un);
   else
     {
-      struct mpn_base_info info;
+      struct __gmpn_base_info info;
       mp_ptr tp;
 
-      mpn_get_base_info (&info, base);
+      __gmpn_get_base_info (&info, base);
       tp = gmp_xalloc_limbs (un);
-      mpn_copyi (tp, u->_mp_d, un);
+      __gmpn_copyi (tp, u->_mp_d, un);
 
-      sn = i + mpn_get_str_other ((unsigned char *) sp + i, base, &info, tp, un);
+      sn = i + __gmpn_get_str_other ((unsigned char *) sp + i, base, &info, tp, un);
       gmp_free (tp);
     }
 
@@ -4199,21 +4199,21 @@ __gmpz_set_str (mpz_t r, const char *sp, int base)
       r->_mp_size = 0;
       return -1;
     }
-  bits = mpn_base_power_of_two_p (base);
+  bits = __gmpn_base_power_of_two_p (base);
 
   if (bits > 0)
     {
       alloc = (dn * bits + GMP_LIMB_BITS - 1) / GMP_LIMB_BITS;
       rp = __gmpz_REALLOC (r, alloc);
-      rn = mpn_set_str_bits (rp, dp, dn, bits);
+      rn = __gmpn_set_str_bits (rp, dp, dn, bits);
     }
   else
     {
-      struct mpn_base_info info;
-      mpn_get_base_info (&info, base);
+      struct __gmpn_base_info info;
+      __gmpn_get_base_info (&info, base);
       alloc = (dn + info.exp - 1) / info.exp;
       rp = __gmpz_REALLOC (r, alloc);
-      rn = mpn_set_str_other (rp, dp, dn, base, &info);
+      rn = __gmpn_set_str_other (rp, dp, dn, base, &info);
       /* Normalization, needed for all-zero input. */
       assert (rn > 0);
       rn -= rp[rn-1] == 0;
@@ -4319,7 +4319,7 @@ __gmpz_import (mpz_t r, size_t count, int order, size_t size, int endian,
   if (limb != 0)
     rp[i++] = limb;
   else
-    i = mpn_normalized_size (rp, i);
+    i = __gmpn_normalized_size (rp, i);
 
   r->_mp_size = i;
 }
