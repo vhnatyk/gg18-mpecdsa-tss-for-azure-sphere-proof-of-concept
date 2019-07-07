@@ -76,7 +76,35 @@
     <ClInclude Include="Inc\Public\gmp.h" />
   </ItemGroup>
   <ItemGroup>
-    <Object Include="..\..\work\e-c\ccp\gmp\mpn\copyi.o" />
+    <Object Include="Objects\addlsh1_n.o" />
+    <Object Include="Objects\addmul_1.o" />
+    <Object Include="Objects\addmul_2.o" />
+    <Object Include="Objects\addmul_3.o" />
+    <Object Include="Objects\add_n.o" />
+    <Object Include="Objects\bdiv_dbm1c.o" />
+    <Object Include="Objects\com.o" />
+    <Object Include="Objects\copyd.o" />
+    <Object Include="Objects\copyi.o" />
+    <Object Include="Objects\diveby3.o" />
+    <Object Include="Objects\divexact.o" />
+    <Object Include="Objects\dive_1.o" />
+    <Object Include="Objects\divrem_1.o" />
+    <Object Include="Objects\gcd_1.o" />
+    <Object Include="Objects\invert_limb.o" />
+    <Object Include="Objects\lshift.o" />
+    <Object Include="Objects\lshiftc.o" />
+    <Object Include="Objects\mode1o.o" />
+    <Object Include="Objects\mod_1_1.o" />
+    <Object Include="Objects\mod_1_2.o" />
+    <Object Include="Objects\mul_1.o" />
+    <Object Include="Objects\mul_2.o" />
+    <Object Include="Objects\rsh1add_n.o" />
+    <Object Include="Objects\rsh1sub_n.o" />
+    <Object Include="Objects\rshift.o" />
+    <Object Include="Objects\sqr_basecase.o" />
+    <Object Include="Objects\sublsh1_n.o" />
+    <Object Include="Objects\submul_1.o" />
+    <Object Include="Objects\sub_n.o" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

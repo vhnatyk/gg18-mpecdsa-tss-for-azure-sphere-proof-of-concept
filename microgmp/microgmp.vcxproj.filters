@@ -31,7 +31,91 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="..\..\work\e-c\ccp\gmp\mpn\copyi.o">
+    <Object Include="Objects\add_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addlsh1_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addmul_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addmul_2.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addmul_3.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\bdiv_dbm1c.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\com.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\copyd.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\copyi.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\dive_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\diveby3.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\divexact.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\divrem_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\gcd_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\invert_limb.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\lshift.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\lshiftc.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mod_1_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mod_1_2.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mode1o.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mul_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mul_2.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\rsh1add_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\rsh1sub_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\rshift.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\sqr_basecase.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\sub_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\sublsh1_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\submul_1.o">
       <Filter>Objects</Filter>
     </Object>
   </ItemGroup>
