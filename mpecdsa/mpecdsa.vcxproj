@@ -73,6 +73,7 @@
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">None</DebugInformationFormat>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Disabled</Optimization>
       <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</UnrollLoops>
+      <RelaxIEEE Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</RelaxIEEE>
     </ClCompile>
     <Link>
       <LibraryDependencies>applibs;pthread;gcc_s;c;curl;rust_hello;gmp;</LibraryDependencies>

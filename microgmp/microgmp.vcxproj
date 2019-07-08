@@ -52,8 +52,11 @@
       <AdditionalOptions>-Werror=implicit-function-declaration %(AdditionalOptions)</AdditionalOptions>
       <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</LinkTimeOptimization>
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Full</Optimization>
-      <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</UnrollLoops>
       <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</LinkTimeOptimization>
+      <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</UnrollLoops>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">None</DebugInformationFormat>
+      <Verbose Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</Verbose>
+      <RelaxIEEE Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</RelaxIEEE>
     </ClCompile>
     <PreBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
