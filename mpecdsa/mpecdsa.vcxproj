@@ -42,7 +42,7 @@
     <TargetHardwareDefinition>sample_hardware.json</TargetHardwareDefinition>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <LibraryPath>$(ProjectDir)\..\microgmp\bin\ARM\$(ConfiguratioName);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="epoll_timerfd_utilities.c" />
@@ -58,11 +58,6 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\microgmp\microgmp.vcxproj">
-      <Project>{8cc1389a-2616-4381-a681-31d102489c4c}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ItemDefinitionGroup>
@@ -74,6 +69,7 @@
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Disabled</Optimization>
       <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</UnrollLoops>
       <RelaxIEEE Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</RelaxIEEE>
+      <PositionIndependentCode Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</PositionIndependentCode>
     </ClCompile>
     <Link>
       <LibraryDependencies>applibs;pthread;gcc_s;c;curl;rust_hello;gmp;</LibraryDependencies>
@@ -83,6 +79,8 @@
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">../rust/target/out/$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeforMemory Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</OptimizeforMemory>
       <DebuggerSymbolInformation Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DebuggerSymbolInformation>
+      <DebuggerSymbolInformation Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">OmitAllSymbolInformation</DebuggerSymbolInformation>
+      <VerboseOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</VerboseOutput>
     </Link>
     <PreBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/sc2 $(ConfigurationName)</Command>
