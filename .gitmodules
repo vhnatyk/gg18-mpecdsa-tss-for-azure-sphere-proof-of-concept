@@ -4,3 +4,6 @@
 [submodule "gcc_wrapper"]
 	path = gcc_wrapper
 	url = C:\\e-c\\rust_azure_sphere_advanced\\gcc_wrapper
+[submodule "l"]
+	path = l
+	url = C:\\e-c\\l
