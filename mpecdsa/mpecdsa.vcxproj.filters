@@ -37,7 +37,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="certs\DigiCertGlobalRootCA.pem" />
-  </ItemGroup>
 </Project>

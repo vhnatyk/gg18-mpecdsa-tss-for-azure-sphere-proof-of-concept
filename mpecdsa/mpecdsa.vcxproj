@@ -53,16 +53,6 @@
     <UpToDateCheckInput Include="app_manifest.json" />
     <ClInclude Include="applibs_versions.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="certs\DigiCertGlobalRootCA.pem">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\microgmp\microgmp.vcxproj">
-      <Project>{8cc1389a-2616-4381-a681-31d102489c4c}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
   <ItemDefinitionGroup>
@@ -83,6 +73,8 @@
       <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">../rust/target/out/$(ConfigurationName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OptimizeforMemory Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</OptimizeforMemory>
       <DebuggerSymbolInformation Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DebuggerSymbolInformation>
+      <VerboseOutput Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</VerboseOutput>
+      <DebuggerSymbolInformation Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">OmitAllSymbolInformation</DebuggerSymbolInformation>
     </Link>
     <PreBuildEvent>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">../rust/sc2 $(ConfigurationName)</Command>

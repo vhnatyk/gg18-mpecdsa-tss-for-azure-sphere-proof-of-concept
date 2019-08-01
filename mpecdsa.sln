@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mpecdsa", "mpecdsa\mpecdsa.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rustlib", "rustlib", "{E989F2B6-6C17-429B-83B9-814BEA1B7884}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "microgmp", "microgmp\microgmp.vcxproj", "{8CC1389A-2616-4381-A681-31D102489C4C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -19,10 +17,6 @@ Global
 		{74BC727B-6B7D-48E1-B600-6296320BC17E}.Debug|ARM.Build.0 = Debug|ARM
 		{74BC727B-6B7D-48E1-B600-6296320BC17E}.Release|ARM.ActiveCfg = Release|ARM
 		{74BC727B-6B7D-48E1-B600-6296320BC17E}.Release|ARM.Build.0 = Release|ARM
-		{8CC1389A-2616-4381-A681-31D102489C4C}.Debug|ARM.ActiveCfg = Debug|ARM
-		{8CC1389A-2616-4381-A681-31D102489C4C}.Debug|ARM.Build.0 = Debug|ARM
-		{8CC1389A-2616-4381-A681-31D102489C4C}.Release|ARM.ActiveCfg = Release|ARM
-		{8CC1389A-2616-4381-A681-31D102489C4C}.Release|ARM.Build.0 = Release|ARM
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
