@@ -177,17 +177,22 @@ int main(int argc, char *argv[])
 	blink(red);
 	float keygen = 0;
 	float sign = 0;
-	int iters = 10;
+	float gg18_client_keygen = 0;
+	int iters = 1;
 	for (size_t i = 0; i < iters; i++)
 	{
-		Log_Debug("i: %d\n", i); 
-		keygen += run_keygen_test();
-		blink(green);
-		sign += run_sign_test();
 		blink(red);
+		Log_Debug("i: %d\n", i); 
+		//keygen += run_keygen_test();
+		blink(green);
+		//sign += run_sign_test();
+		blink(red);
+		gg18_client_keygen += run_start_gg18_client_keygen();
+		blink(green);
 	}
 	
-	Log_Debug("Application exiting... keygen: %.4f sign: %.4f \n", keygen/iters, sign/iters);
+	Log_Debug("Application exiting... keygen: %.4f | sign: %.4f | gg18: %.4f \n", 
+		keygen/iters, sign/iters, gg18_client_keygen/iters);
 	blink(green);
 	blink(green);
 	return 0;

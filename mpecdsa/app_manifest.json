@@ -5,7 +5,7 @@
   "EntryPoint": "/bin/app",
   "CmdArgs": [],
   "Capabilities": {
-    "AllowedConnections": [ "example.com" ],
+    "AllowedConnections": [ "example.com", "192.168.35.1", "192.168.43.7" ],
     "MutableStorage": { "SizeKB": 16 },
     "Gpio": [ "$MT3620_RDB_LED1_RED", "$MT3620_RDB_LED1_GREEN" ],
     "Uart": []
