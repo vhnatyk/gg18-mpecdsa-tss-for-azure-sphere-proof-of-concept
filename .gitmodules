@@ -1,6 +1,6 @@
 [submodule "rust"]
 	path = rust
-	url = C:\\e-c\\rust_dbg_hello_world
+    url=https://github.com/vhnatyk/rust-hello-azure-sphere
 [submodule "gcc_wrapper"]
 	path = gcc_wrapper
 	url = C:\\e-c\\rust_azure_sphere_advanced\\gcc_wrapper
