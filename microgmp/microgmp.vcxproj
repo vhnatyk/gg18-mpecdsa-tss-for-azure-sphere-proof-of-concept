@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{8cc1389a-2616-4381-a681-31d102489c4c}</ProjectGuid>
+    <Keyword>AzureSphere</Keyword>
+    <RootNamespace>microgmp</RootNamespace>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <ApplicationType>Linux</ApplicationType>
+    <ApplicationTypeRevision>1.0</ApplicationTypeRevision>
+    <TargetLinuxPlatform>Generic</TargetLinuxPlatform>
+    <LinuxProjectType>{D51BCBC9-82E9-4017-911E-C93873C4EA2B}</LinuxProjectType>
+    <DebugMachineType>Device</DebugMachineType>
+    <PlatformToolset>GCC_AzureSphere_1_0</PlatformToolset>
+    <ProjectPublicIncludePath>$(MSBuildProjectDirectory)\Inc\Public</ProjectPublicIncludePath>
+    <PublicIncludePath>$(MSBuildProjectDirectory)\Inc\Public</PublicIncludePath>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <TargetSysroot>2+Beta1905</TargetSysroot>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <TargetSysroot>2+Beta1905</TargetSysroot>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <TargetName>libgmp</TargetName>
+    <ExtensionsToDeleteOnClean>*.*</ExtensionsToDeleteOnClean>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <TargetName>libgmp</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>-Werror=implicit-function-declaration %(AdditionalOptions)</AdditionalOptions>
+      <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</LinkTimeOptimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">Full</Optimization>
+      <LinkTimeOptimization Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</LinkTimeOptimization>
+      <UnrollLoops Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</UnrollLoops>
+      <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">None</DebugInformationFormat>
+      <Verbose Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</Verbose>
+      <RelaxIEEE Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</RelaxIEEE>
+    </ClCompile>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+      </Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">C:\Windows\System32\xcopy /Y "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" "$(SysRootIncludePath)\..\lib"</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">C:\Windows\System32\xcopy /Y "$(ProjectDir)$(OutDir)$(TargetName)$(TargetExt)" "$(SysRootIncludePath)\..\lib"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="microgmp.c" />
+    <ClInclude Include="Inc\Public\microgmp.h" />
+    <ClInclude Include="Inc\Public\gmp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Objects\addlsh1_n.o" />
+    <Object Include="Objects\addmul_1.o" />
+    <Object Include="Objects\addmul_2.o" />
+    <Object Include="Objects\addmul_3.o" />
+    <Object Include="Objects\add_n.o" />
+    <Object Include="Objects\bdiv_dbm1c.o" />
+    <Object Include="Objects\com.o" />
+    <Object Include="Objects\copyd.o" />
+    <Object Include="Objects\copyi.o" />
+    <Object Include="Objects\diveby3.o" />
+    <Object Include="Objects\divexact.o" />
+    <Object Include="Objects\dive_1.o" />
+    <Object Include="Objects\divrem_1.o" />
+    <Object Include="Objects\gcd_1.o" />
+    <Object Include="Objects\invert_limb.o" />
+    <Object Include="Objects\lshift.o" />
+    <Object Include="Objects\lshiftc.o" />
+    <Object Include="Objects\mode1o.o" />
+    <Object Include="Objects\mod_1_1.o" />
+    <Object Include="Objects\mod_1_2.o" />
+    <Object Include="Objects\mul_1.o" />
+    <Object Include="Objects\mul_2.o" />
+    <Object Include="Objects\rsh1add_n.o" />
+    <Object Include="Objects\rsh1sub_n.o" />
+    <Object Include="Objects\rshift.o" />
+    <Object Include="Objects\sqr_basecase.o" />
+    <Object Include="Objects\sublsh1_n.o" />
+    <Object Include="Objects\submul_1.o" />
+    <Object Include="Objects\sub_n.o" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

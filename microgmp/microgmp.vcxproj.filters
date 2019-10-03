@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{3b4dad88-4c8c-4c6d-833e-d8f13690d75f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Inc\Public\microgmp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Public\gmp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="microgmp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Objects\add_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addlsh1_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addmul_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addmul_2.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\addmul_3.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\bdiv_dbm1c.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\com.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\copyd.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\copyi.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\dive_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\diveby3.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\divexact.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\divrem_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\gcd_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\invert_limb.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\lshift.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\lshiftc.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mod_1_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mod_1_2.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mode1o.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mul_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\mul_2.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\rsh1add_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\rsh1sub_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\rshift.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\sqr_basecase.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\sub_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\sublsh1_n.o">
+      <Filter>Objects</Filter>
+    </Object>
+    <Object Include="Objects\submul_1.o">
+      <Filter>Objects</Filter>
+    </Object>
+  </ItemGroup>
+</Project>
